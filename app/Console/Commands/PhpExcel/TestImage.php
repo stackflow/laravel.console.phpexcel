@@ -52,10 +52,14 @@ class TestImage extends Command
             foreach ($worksheet->getRowIterator() as $row) {
                 $this->info('    Row number: ' . $row->getRowIndex());
                 foreach ($row->getCellIterator() as $cell) {
-                    if (!is_null($cell)) {
-                        $this->info('      Cell: ' . $cell->getCoordinate() . '; Value: ' . $cell->getCalculatedValue());
+                    if ($cell) {
+                        if (isset($drawing[$cell->getCoordinate()])) {
+                            $this->info('      Cell: ' . $cell->getCoordinate() . '; Value: drawing');
+                        } else {
+                            $this->info('      Cell: ' . $cell->getCoordinate() . '; Value: ' . $cell->getCalculatedValue());
+                        }
                     } else {
-                        $this->error('      Cell: ' . $cell->getCoordinate() . '; Value: null');
+                        $this->error('!!!!!!Cell: ' . $cell->getCoordinate() . '; Value: null');
                     }
                 }
             }
