@@ -41,6 +41,13 @@ class TestImage extends Command
         $this->info('Path: ' . $path);
         $phpExcel = \PHPExcel_IOFactory::load($path);
         foreach ($phpExcel->getWorksheetIterator() as $worksheet) {
+
+            /** @var \PHPExcel_Worksheet_BaseDrawing[] */
+            $drawingCollection = $worksheet->getDrawingCollection();
+            foreach ($drawingCollection as $drawing) {
+                $this->info('  Drawing: ' . $drawing->getCoordinates());
+                $drawings[$drawing->getCoordinates()] = $drawing;
+            }
             $this->info('  Worksheet: ' . $worksheet->getTitle());
             foreach ($worksheet->getRowIterator() as $row) {
                 $this->info('    Row number: ' . $row->getRowIndex());
