@@ -56,13 +56,17 @@ class TestImage extends Command
                         if (isset($drawings[$cell->getCoordinate()])) {
                             $this->info('      Cell: ' . $cell->getCoordinate() . '; Value: drawing');
                             $drawing = $drawings[$cell->getCoordinate()];
-                            $drawingIndexedFilename = public_path() . '/images/catalog/' . $drawing->getIndexedFilename();
+                            $drawingPath = public_path() . '/images/catalog/';
+                            if (!file_exists($drawingPath)) {
+                                mkdir($drawingPath, 0777, true);
+                            }
+                            $drawingIndexedFilename = $drawingPath . $drawing->getIndexedFilename();
                             $this->info('      DrawingIndexedFilename: ' . $drawingIndexedFilename);
                             if ($drawing instanceof \PHPExcel_Worksheet_Drawing) {
                                 $this->info('      DrawingPath: ' . $drawing->getPath());
                                 copy($drawing->getPath(), $drawingIndexedFilename);
+                            } elseif ($drawing instanceof \PHPExcel_Worksheet_MemoryDrawing) {
                                 // we have a memory drawing (case xls)
-                            } else if ($drawing instanceof \PHPExcel_Worksheet_MemoryDrawing) {
                                 $image = $drawing->getImageResource();
                                 // save image to disk
                                 $renderingFunction = $drawing->getRenderingFunction();
