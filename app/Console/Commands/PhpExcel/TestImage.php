@@ -41,7 +41,7 @@ class TestImage extends Command
         $this->info('Path: ' . $path);
         $phpExcel = \PHPExcel_IOFactory::load($path);
         foreach ($phpExcel->getWorksheetIterator() as $worksheet) {
-
+            $drawings = [];
             /** @var \PHPExcel_Worksheet_BaseDrawing[] */
             $drawingCollection = $worksheet->getDrawingCollection();
             foreach ($drawingCollection as $drawing) {
@@ -53,7 +53,7 @@ class TestImage extends Command
                 $this->info('    Row number: ' . $row->getRowIndex());
                 foreach ($row->getCellIterator() as $cell) {
                     if ($cell) {
-                        if (isset($drawing[$cell->getCoordinate()])) {
+                        if (isset($drawings[$cell->getCoordinate()])) {
                             $this->info('      Cell: ' . $cell->getCoordinate() . '; Value: drawing');
                         } else {
                             $this->info('      Cell: ' . $cell->getCoordinate() . '; Value: ' . $cell->getCalculatedValue());
