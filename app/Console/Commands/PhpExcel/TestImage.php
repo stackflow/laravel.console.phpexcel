@@ -37,7 +37,7 @@ class TestImage extends Command
      */
     public function fire()
     {
-        $path = storage_path() . '/app/phpexcel/test.xlsx';
+        $path = storage_path() . '/app/phpexcel/template.xlsx';
         $this->info('Path: ' . $path);
         $phpExcel = \PHPExcel_IOFactory::load($path);
         foreach ($phpExcel->getWorksheetIterator() as $worksheet) {
