@@ -39,7 +39,7 @@ class TestImage extends Command
     {
         $path = storage_path() . '/app/phpexcel/test.xls';
         $this->info('Path: ' . $path);
-        $phpExcel = PHPExcel_IOFactory::load($path);
+        $phpExcel = \PHPExcel_IOFactory::load($path);
         foreach ($phpExcel->getWorksheetIterator() as $worksheet) {
             $this->info('  Worksheet: ' . $worksheet->getTitle());
             foreach ($worksheet->getRowIterator() as $row) {
