@@ -49,10 +49,11 @@ class TestImage extends Command
                 $drawings[$drawing->getCoordinates()] = $drawing;
             }
 
-            foreach ($worksheet->getRowIterator() as $row) {
+            foreach ($worksheet->getRowIterator() as $rowIndex => $row) {
                 $this->info('    Row number: ' . $row->getRowIndex());
-                foreach ($row->getCellIterator() as $cell) {
+                foreach ($row->getCellIterator() as $cellIndex => $cell) {
                     if ($cell) {
+                        $this->info('      Row index: ' . $rowIndex . '; Column index:' . $cellIndex);
                         if (isset($drawings[$cell->getCoordinate()])) {
                             $this->info('      Cell: ' . $cell->getCoordinate() . '; Value: drawing');
                             $drawing = $drawings[$cell->getCoordinate()];
